@@ -159,7 +159,6 @@
            (push-to-end fcol-name (fkey-foreign-columns fkey)))
      :finally (return catalog)))
 
-
 ;;;
 ;;; Tools to handle row queries.
 ;;;
@@ -168,6 +167,7 @@
 
    Mostly we just use the name, and make try to avoid parsing dates."
   (case (intern (string-upcase type) "KEYWORD")
+    (:geometry       (format nil "[~a].STAsText() as [~a]" name name))
     (:time           (format nil "convert(varchar(30), [~a], 114)" name))
     (:datetime       (format nil "convert(varchar(30), [~a], 126)" name))
     (:datetime2      (format nil "convert(varchar(30), [~a], 126)" name))
